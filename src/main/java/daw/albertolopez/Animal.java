@@ -168,10 +168,11 @@ public class Animal {
      * Pone al animal a jugar y cambia su peso en funcion del tiempo de juego.
      *
      * @param cantidadMinutos entre -180 y 180.
-     * @throws IllegalArgumentException
+     * @throws IllegalArgumentException si e tiempo de juego es demasiado grande
+     * o el animal pesa poco
      */
     public void jugar(int cantidadMinutos) throws IllegalArgumentException {
-        this.estado = "jugando";
+
         //calcula el valor absoluto
         if (cantidadMinutos < 0) {
             cantidadMinutos = -1 * cantidadMinutos;
@@ -188,6 +189,7 @@ public class Animal {
             }
             if (this.peso + variacion > 0) {
                 this.peso += variacion;
+                this.estado = "jugando";
             } else {
                 throw new IllegalArgumentException("El animal es demasiado pequeño para jugar.");
             }
@@ -208,15 +210,14 @@ public class Animal {
     /**
      * Clona el Animal en un nuevo objeto.
      *
-     * @param pet objeto Animal a blonar
+     * @param pet objeto Animal a clonar
      * @return instancia del Animal clonado
      */
     public static Animal clonar(Animal pet) {
-        try {
-            return new Animal(pet.getFechaNacimiento(),
-                    pet.nombre, pet.getTipo(), pet.getPeso(), pet.getEstado());
-        } catch (NullPointerException npe) {
-            System.out.println("Ha habido un NullPointerException");
+        if (pet != null) {
+            return new Animal(pet.getFechaNacimiento(), pet.nombre, 
+                    pet.getTipo(), pet.getPeso(), pet.getEstado());
+        } else {
             return new Animal();
         }
     }
