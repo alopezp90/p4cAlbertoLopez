@@ -1,7 +1,9 @@
 package daw.programa;
 
 import daw.albertolopez.Animal;
+import daw.albertolopez.EstadoAnimal;
 import daw.albertolopez.Persona;
+import daw.albertolopez.TipoAnimal;
 import java.time.LocalDate;
 import java.time.Month;
 
@@ -14,7 +16,7 @@ public class Prueba {
     public static void main(String[] args) {
         
         Animal a1 = new Animal();
-        Animal a2 = new Animal(LocalDate.of(2018, Month.APRIL, 12), "Zoe", "perro", 6800, "durmiendo");
+        Animal a2 = new Animal(LocalDate.of(2018, Month.APRIL, 12), "Zoe", TipoAnimal.PERRO, 6800, EstadoAnimal.DURMIENDO);
 
         Persona p1 = new Persona("Alberto", 30);
         Persona p2 = new Persona("Vico", 25);

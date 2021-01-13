@@ -10,9 +10,9 @@ public class Animal {
 
     private LocalDate fechaNacimiento;
     private String nombre;
-    private String tipo;
+    private TipoAnimal tipo;
     private double peso;
-    private String estado;
+    private EstadoAnimal estado;
 
     //Contador de instancias
     private static int contadorInstancias = 0;
@@ -22,7 +22,7 @@ public class Animal {
      * <ul>
      * <li>fechaNacimiento: el momento de la instanciacion</li>
      * <li>nombre: Turrón</li>
-     * <li>tipo: null</li>
+     * <li>tipo: gato</li>
      * <li>peso: 2200</li>
      * <li>estado: durmiendo</li>
      * </ul>
@@ -30,9 +30,9 @@ public class Animal {
     public Animal() {
         this.fechaNacimiento = LocalDate.now();
         this.nombre = "Turrón";
-        this.tipo = null;
+        this.tipo = TipoAnimal.GATO;
         this.peso = 2200;
-        this.estado = "durmiendo";
+        this.estado = EstadoAnimal.DURMIENDO;
         contadorInstancias++;
     }
 
@@ -41,38 +41,43 @@ public class Animal {
      *
      * @param fechaNacimiento fecha de nacimiento del Animal.
      * @param nombre nombre del Animal.
-     * @param tipo tipo de Animal, puede ser: gato, perro, lagarto, cobaya,
-     * periquito.
+     * @param TipoAnimal tipo de Animal, puede ser: gato, perro, lagarto,
+     * cobaya, periquito.
      * @param peso peso del Animal en gramos.
-     * @param estado estado del Animal, puede ser: comiendo, durmiendo,
+     * @param EstadoAnimal estado del Animal, puede ser: comiendo, durmiendo,
      * despierto/reposo o jugando.
      */
-    public Animal(LocalDate fechaNacimiento, String nombre, String tipo, double peso, String estado) {
+    public Animal(LocalDate fechaNacimiento, String nombre, TipoAnimal tipo, double peso, EstadoAnimal estado) {
         this.fechaNacimiento = fechaNacimiento;
         this.nombre = nombre;
-        this.tipo = compruebaTipo(tipo);
+        this.tipo = tipo;
         this.peso = compruebaPeso(peso);
-        this.estado = compruebaEstado(estado);
+        this.estado = estado;
         contadorInstancias++;
     }
 
-    //Comprueba que el tipo introducido sea valido
-    public String compruebaTipo(String tipo) {
-        switch (tipo) {
-            case "gato":
-            case "perro":
-            case "lagarto":
-            case "cobaya":
-            case "periquito":
-                return tipo;
-            default:
-                System.out.println("El tipo no es valido, se ha inicializado nulo.\n"
-                        + "Tipos validos: gato, perro, lagarto, cobaya, periquito");
-                return null;
-        }
-    }
-
-    //Comprueba que peso sea siempre positivo
+    //Con el enum ya no es necesario
+//    //Comprueba que el tipo introducido sea valido
+//    public String compruebaTipo(String tipo) {
+//        switch (tipo) {
+//            case "gato":
+//            case "perro":
+//            case "lagarto":
+//            case "cobaya":
+//            case "periquito":
+//                return tipo;
+//            default:
+//                System.out.println("El tipo no es valido, se ha inicializado nulo.\n"
+//                        + "Tipos validos: gato, perro, lagarto, cobaya, periquito");
+//                return null;
+//        }
+//    }
+    /**
+     * Comprueba que el peso sea positivo, si no lo es, lo convierte.
+     *
+     * @param peso double a comprobar
+     * @return double con peso positivo
+     */
     public double compruebaPeso(double peso) {
         if (peso < 0) {
             peso = -1 * peso;
@@ -82,53 +87,28 @@ public class Animal {
         return peso;
     }
 
-    //Comprueba que el estado introducido sea valido
-    public String compruebaEstado(String estado) {
-        switch (estado) {
-            case "comiendo":
-            case "durmiendo":
-                this.estado = estado;
-                break;
-            case "despierto":
-            case "reposo":
-            case "despierto/reposo":
-                return "despierto/reposo";
-            default:
-                if (!estado.equals("jugando")) {
-                    System.out.println("El estado introducido no es valido, se "
-                            + "ha inicializado como 'jugando'.\n"
-                            + "Estados validos: comiendo, durmiendo, "
-                            + "despierto/reposo, jugando");
-                }
-        }
-        return "jugando";
-    }
-
-    //Metodos Getter
-    public LocalDate getFechaNacimiento() {
-        return fechaNacimiento;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public String getTipo() {
-        return tipo;
-    }
-
-    public double getPeso() {
-        return peso;
-    }
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public static int getContadorInstancias() {
-        return contadorInstancias;
-    }
-
+    //Con el enum ya no es necesario
+//    //Comprueba que el estado introducido sea valido
+//    public String compruebaEstado(String estado) {
+//        switch (estado) {
+//            case "comiendo":
+//            case "durmiendo":
+//                this.estado = estado;
+//                break;
+//            case "despierto":
+//            case "reposo":
+//            case "despierto/reposo":
+//                return "despierto/reposo";
+//            default:
+//                if (!estado.equals("jugando")) {
+//                    System.out.println("El estado introducido no es valido, se "
+//                            + "ha inicializado como 'jugando'.\n"
+//                            + "Estados validos: comiendo, durmiendo, "
+//                            + "despierto/reposo, jugando");
+//                }
+//        }
+//        return "jugando";
+//    }
     /**
      * Incrementa el peso del animal.
      *
@@ -147,21 +127,21 @@ public class Animal {
      * Pone al animal a dormir.
      */
     public void dormir() {
-        this.estado = "durmiendo";
+        this.estado = EstadoAnimal.DURMIENDO;
     }
 
     /**
      * Despierta al animal.
      */
     public void despertar() {
-        this.estado = "despierto/reposo";
+        this.estado = EstadoAnimal.DESPIERTO_REPOSO;
     }
 
     /**
      * Pone al animal en reposo.
      */
     public void descansar() {
-        this.estado = "despierto/reposo";
+        this.estado = EstadoAnimal.DESPIERTO_REPOSO;
     }
 
     /**
@@ -189,14 +169,18 @@ public class Animal {
             }
             if (this.peso + variacion > 0) {
                 this.peso += variacion;
-                this.estado = "jugando";
+                this.estado = EstadoAnimal.JUGANDO;
             } else {
                 throw new IllegalArgumentException("El animal es demasiado pequeño para jugar.");
             }
         }
     }
 
-    //Metodo toString
+    /**
+     * Crea un String con todas las propiedades del Animal.
+     *
+     * @return String.
+     */
     @Override
     public String toString() {
         return "Animal:\n"
@@ -215,10 +199,56 @@ public class Animal {
      */
     public static Animal clonar(Animal pet) {
         if (pet != null) {
-            return new Animal(pet.getFechaNacimiento(), pet.nombre, 
+            return new Animal(pet.getFechaNacimiento(), pet.nombre,
                     pet.getTipo(), pet.getPeso(), pet.getEstado());
         } else {
             return new Animal();
         }
     }
+
+    //Metodos Setter y Getter
+    public LocalDate getFechaNacimiento() {
+        return fechaNacimiento;
+    }
+
+    public void setFechaNacimiento(LocalDate fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public TipoAnimal getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(TipoAnimal tipo) {
+        this.tipo = tipo;
+    }
+
+    public double getPeso() {
+        return peso;
+    }
+
+    public void setPeso(double peso) {
+        this.peso = peso;
+    }
+
+    public EstadoAnimal getEstado() {
+        return estado;
+    }
+
+    public void setEstado(EstadoAnimal estado) {
+        this.estado = estado;
+    }
+
+    public static int getContadorInstancias() {
+        return contadorInstancias;
+    }
+
 }
